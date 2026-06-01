@@ -1,0 +1,14 @@
+# Credentials — never commit these
+config.py
+
+# Generated output and cache
+screener_results.csv
+last_results.json
+subscriber_cache.json
+unsubscribed.json
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
