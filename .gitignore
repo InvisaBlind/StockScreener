@@ -5,7 +5,6 @@ config.py
 screener_results.csv
 last_results.json
 subscriber_cache.json
-unsubscribed.json
 
 # Python
 __pycache__/

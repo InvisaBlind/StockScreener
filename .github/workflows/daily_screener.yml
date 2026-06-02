@@ -12,6 +12,9 @@ jobs:
   run-screener:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write  # needed to commit unsubscribed.json back to repo
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v5
@@ -34,3 +37,11 @@ jobs:
 
       - name: Run screener
         run: python run.py
+
+      - name: Save unsubscribed list back to repo
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add unsubscribed.json
+          git diff --cached --quiet || git commit -m "Update unsubscribed list [skip ci]"
+          git push
