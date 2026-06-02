@@ -21,7 +21,7 @@ from subscribers import (
 from mailer import send_daily_results, send_welcome_email
 
 # Set to True to limit to first 50 tickers for faster test runs
-TEST_MODE       = True
+TEST_MODE       = False
 TEST_MODE_LIMIT = 20
 
 
