@@ -6,7 +6,10 @@ import os
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from datetime import datetime
+from zoneinfo import ZoneInfo
 from config import GMAIL_ADDRESS, GMAIL_APP_PASSWORD
+
+ET = ZoneInfo("America/New_York")
 
 LAST_RESULTS_FILE = "last_results.json"
 
@@ -17,7 +20,7 @@ LAST_RESULTS_FILE = "last_results.json"
 
 def save_last_results(html: str):
     with open(LAST_RESULTS_FILE, "w") as f:
-        json.dump({"html": html, "date": datetime.now().strftime("%Y-%m-%d")}, f)
+        json.dump({"html": html, "date": datetime.now(ET).strftime("%Y-%m-%d")}, f)
 
 
 def load_last_results() -> dict | None:
@@ -63,8 +66,9 @@ def build_email_html(df, run_date: str) -> str:
 
     unsubscribe_note = (
         "<p style='color:#aaa;font-size:11px;margin-top:32px'>"
-        "Reply with <strong>unsubscribe</strong> to stop receiving emails, "
-        "or <strong>subscribe</strong> to rejoin.</p>"
+        "To unsubscribe or resubscribe, send a new email to "
+        "<a href='mailto:henryfitz.dev@gmail.com'>henryfitz.dev@gmail.com</a> "
+        "with the word <strong>unsubscribe</strong> or <strong>subscribe</strong> in the body.</p>"
     )
 
     return f"""
@@ -106,7 +110,7 @@ def _send(to_addresses: list[str], subject: str, html_body: str):
 
 
 def send_daily_results(df, recipients: list[str]):
-    run_date  = datetime.now().strftime("%B %d, %Y")
+    run_date  = datetime.now(ET).strftime("%B %d, %Y")
     html_body = build_email_html(df, run_date)
     save_last_results(html_body)
     _send(recipients, f"Stock Screener Results - {run_date}", html_body)
