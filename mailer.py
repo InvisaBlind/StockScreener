@@ -27,7 +27,10 @@ def load_last_results() -> dict | None:
     if not os.path.exists(LAST_RESULTS_FILE):
         return None
     with open(LAST_RESULTS_FILE) as f:
-        return json.load(f)
+        data = json.load(f)
+    if not data or "date" not in data or "html" not in data:
+        return None
+    return data
 
 
 # ---------------------------------------------------------------------------
