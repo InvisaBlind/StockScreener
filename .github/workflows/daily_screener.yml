@@ -2,7 +2,7 @@ name: Daily Stock Screener
 
 on:
   schedule:
-    - cron: "0 21 * * 1-5"  # 9pm UTC = 5pm ET, Monday-Friday
+    - cron: "0 15 * * 1-5"  # 3pm UTC = 10am ET (EST) / 11am EDT, Monday-Friday
   workflow_dispatch:          # allows manual trigger from GitHub UI
 
 env:
