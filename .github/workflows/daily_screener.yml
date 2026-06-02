@@ -38,10 +38,10 @@ jobs:
       - name: Run screener
         run: python run.py
 
-      - name: Save unsubscribed list back to repo
+      - name: Save persistent state back to repo
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add unsubscribed.json
-          git diff --cached --quiet || git commit -m "Update unsubscribed list [skip ci]"
+          git add unsubscribed.json last_results.json
+          git diff --cached --quiet || git commit -m "Update persistent state [skip ci]"
           git push
