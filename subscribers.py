@@ -11,8 +11,7 @@ import urllib.request
 import pandas as pd
 from config import GMAIL_ADDRESS, GMAIL_APP_PASSWORD, GOOGLE_SHEET_CSV_URL
 
-SUBSCRIBER_CACHE_FILE = "subscriber_cache.json"
-UNSUBSCRIBE_FILE      = "unsubscribed.json"
+UNSUBSCRIBE_FILE = "unsubscribed.json"
 
 
 # ---------------------------------------------------------------------------
@@ -62,23 +61,6 @@ def process_inbox_requests():
 
     if changed:
         _save_unsubscribed(unsub_list)
-
-
-def find_new_subscribers(current: list[str], cached: list[str]) -> list[str]:
-    """Return emails in current that were not in the last cached run."""
-    return [e for e in current if e not in set(cached)]
-
-
-def load_cached_subscribers() -> list[str]:
-    if not os.path.exists(SUBSCRIBER_CACHE_FILE):
-        return []
-    with open(SUBSCRIBER_CACHE_FILE) as f:
-        return json.load(f)
-
-
-def save_subscriber_cache(emails: list[str]):
-    with open(SUBSCRIBER_CACHE_FILE, "w") as f:
-        json.dump(emails, f)
 
 
 # ---------------------------------------------------------------------------

@@ -1,9 +1,9 @@
-name: Daily Stock Screener
+name: Weekly Stock Screener
 
 on:
   schedule:
-    - cron: "0 15 * * 1-5"  # 3pm UTC = 10am ET (EST) / 11am EDT, Monday-Friday
-  workflow_dispatch:          # allows manual trigger from GitHub UI
+    - cron: "0 14 * * 2"  # 2pm UTC = 10am EDT / 9am EST, every Tuesday
+  workflow_dispatch:        # allows manual trigger from GitHub UI
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -38,10 +38,10 @@ jobs:
       - name: Run screener
         run: python run.py
 
-      - name: Save persistent state back to repo
+      - name: Save unsubscribed list back to repo
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add unsubscribed.json last_results.json
-          git diff --cached --quiet || git commit -m "Update persistent state [skip ci]"
+          git add unsubscribed.json
+          git diff --cached --quiet || git commit -m "Update unsubscribed list [skip ci]"
           git push
